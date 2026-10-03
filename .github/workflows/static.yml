@@ -41,13 +41,6 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Prepare SPA routing for GitHub Pages
-        run: |
-          # Copy index.html to 404.html so direct URL routing works on GitHub Pages
-          cp dist/index.html dist/404.html 2>/dev/null || true
-          # Disable Jekyll processing
-          touch dist/.nojekyll
-
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

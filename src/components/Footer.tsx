@@ -1,4 +1,5 @@
 import React from 'react';
+import { getRoute } from '../utils/routes';
 
 export const Footer: React.FC = () => {
   return (
@@ -23,25 +24,25 @@ export const Footer: React.FC = () => {
           {/* Links to Separate Pages */}
           <nav className="flex flex-wrap items-center justify-center gap-6 text-xs font-medium">
             <a
-              href="/"
+              href={getRoute('/')}
               className="text-slate-300 transition-colors hover:text-white"
             >
               Главная
             </a>
             <a
-              href="/privacy"
+              href={getRoute('privacy')}
               className="text-slate-300 transition-colors hover:text-white"
             >
               Политика конфиденциальности
             </a>
             <a
-              href="/terms"
+              href={getRoute('terms')}
               className="text-slate-300 transition-colors hover:text-white"
             >
               Условия использования (EULA)
             </a>
             <a
-              href="/support"
+              href={getRoute('support')}
               className="text-slate-300 transition-colors hover:text-white"
             >
               Служба поддержки

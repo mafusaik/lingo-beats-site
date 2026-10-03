@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Mail, Send, CheckCircle2, MessageSquare, Copy, Check, HelpCircle, Smartphone, ExternalLink } from 'lucide-react';
 import { Footer } from '../components/Footer';
+import { getRoute } from '../utils/routes';
 
 export const SupportPage: React.FC = () => {
   const [name, setName] = useState('');
@@ -53,7 +54,7 @@ export const SupportPage: React.FC = () => {
       <header className="border-b border-white/10 bg-[#0b171f]/90 backdrop-blur-md sticky top-0 z-40">
         <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
-            <a href="/" className="flex items-center gap-3 group">
+            <a href={getRoute('/')} className="flex items-center gap-3 group">
               <img
                 src="/logo_dark_512.png"
                 alt="Lingo Beats"
@@ -69,7 +70,7 @@ export const SupportPage: React.FC = () => {
 
           <div className="flex items-center gap-4">
             <a
-              href="/"
+              href={getRoute('/')}
               className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-amber-400 transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />

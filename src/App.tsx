@@ -31,14 +31,15 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  // Support direct route matching if navigated inside SPA or directly
-  if (currentPath.startsWith('/privacy')) {
+  // Support direct route matching whether at domain root or under /repo-name/
+  const normalizedPath = currentPath.toLowerCase();
+  if (normalizedPath.includes('/privacy')) {
     return <PrivacyPage />;
   }
-  if (currentPath.startsWith('/terms')) {
+  if (normalizedPath.includes('/terms')) {
     return <TermsPage />;
   }
-  if (currentPath.startsWith('/support')) {
+  if (normalizedPath.includes('/support')) {
     return <SupportPage />;
   }
 

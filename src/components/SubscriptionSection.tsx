@@ -1,5 +1,6 @@
 import React from 'react';
 import { Check, RefreshCw } from 'lucide-react';
+import { getRoute } from '../utils/routes';
 
 export const SubscriptionSection: React.FC = () => {
   return (
@@ -175,13 +176,13 @@ export const SubscriptionSection: React.FC = () => {
           <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-slate-400">
             <span>
               Пользовательское соглашение и EULA:{' '}
-              <a href="/terms" className="text-amber-400 hover:underline">
+              <a href={getRoute('terms')} className="text-amber-400 hover:underline">
                 Условия использования (/terms)
               </a>
             </span>
             <span>
               Защита данных:{' '}
-              <a href="/privacy" className="text-amber-400 hover:underline">
+              <a href={getRoute('privacy')} className="text-amber-400 hover:underline">
                 Политика конфиденциальности (/privacy)
               </a>
             </span>

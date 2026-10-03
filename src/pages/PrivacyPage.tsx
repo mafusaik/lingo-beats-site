@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowLeft, Shield, Lock, FileText, CheckCircle2, CreditCard } from 'lucide-react';
 import { Footer } from '../components/Footer';
+import { getRoute } from '../utils/routes';
 
 export const PrivacyPage: React.FC = () => {
   return (
@@ -9,7 +10,7 @@ export const PrivacyPage: React.FC = () => {
       <header className="border-b border-white/10 bg-[#0b171f]/90 backdrop-blur-md sticky top-0 z-40">
         <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
-            <a href="/" className="flex items-center gap-3 group">
+            <a href={getRoute('/')} className="flex items-center gap-3 group">
               <img
                 src="/logo_dark_512.png"
                 alt="Lingo Beats"
@@ -25,14 +26,14 @@ export const PrivacyPage: React.FC = () => {
 
           <div className="flex items-center gap-4">
             <a
-              href="/"
+              href={getRoute('/')}
               className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-amber-400 transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>На главную</span>
             </a>
             <a
-              href="/support"
+              href={getRoute('support')}
               className="hidden sm:inline-flex rounded-lg border border-white/15 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-white/5"
             >
               Поддержка
