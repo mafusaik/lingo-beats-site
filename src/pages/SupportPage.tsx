@@ -1,8 +1,24 @@
-import React, { useState } from 'react';
-import { ArrowLeft, Mail, Send, CheckCircle2, MessageSquare, Copy, Check, HelpCircle, Smartphone, ExternalLink } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowLeft, Mail, Send, CheckCircle2, MessageSquare, Copy, Check, HelpCircle, Smartphone, ExternalLink, AlertCircle, ShieldCheck } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 import { Footer } from '../components/Footer';
 import { AppLogo } from '../components/AppLogo';
 import { useNavigation } from '../context/NavigationContext';
+
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'GMNx52F0-ZQLDX-2Z';
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_lingobeats';
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_lingobeats';
+
+interface SubmittedTicket {
+  id: string;
+  name: string;
+  email: string;
+  categoryLabel: string;
+  platformLabel: string;
+  message: string;
+  deliverySuccess: boolean;
+  errorNote?: string;
+}
 
 export const SupportPage: React.FC = () => {
   const { navigateTo } = useNavigation();
@@ -12,9 +28,20 @@ export const SupportPage: React.FC = () => {
   const [platform, setPlatform] = useState('ios');
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submittedTicket, setSubmittedTicket] = useState<{ id: string; email: string } | null>(null);
+  const [submittedTicket, setSubmittedTicket] = useState<SubmittedTicket | null>(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+
+  // Initialize EmailJS with public key on mount
+  useEffect(() => {
+    if (EMAILJS_PUBLIC_KEY) {
+      try {
+        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+      } catch (err) {
+        console.warn('EmailJS init note:', err);
+      }
+    }
+  }, []);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText('glazer.dev@gmail.com');
@@ -22,7 +49,7 @@ export const SupportPage: React.FC = () => {
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
 
@@ -42,12 +69,79 @@ export const SupportPage: React.FC = () => {
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      const randomTicketNum = Math.floor(1000 + Math.random() * 9000);
-      const ticketId = `LB-2026-${randomTicketNum}`;
-      setSubmittedTicket({ id: ticketId, email });
+    const randomTicketNum = Math.floor(1000 + Math.random() * 9000);
+    const ticketId = `LB-2026-${randomTicketNum}`;
+
+    const categoryLabels: Record<string, string> = {
+      subscription: 'Вопрос по подписке / оплате',
+      technical: 'Техническая ошибка в приложении',
+      audio: 'Качество звука или субтитры',
+      content: 'Предложение темы для трека',
+      other: 'Другое',
+    };
+
+    const platformLabels: Record<string, string> = {
+      ios: 'Apple iOS (iPhone)',
+      android: 'Android',
+      other: 'Другое',
+    };
+
+    const categoryLabel = categoryLabels[category] || category;
+    const platformLabel = platformLabels[platform] || platform;
+
+    const templateParams = {
+      name: name.trim(),
+      from_name: name.trim(),
+      user_name: name.trim(),
+      email: email.trim(),
+      from_email: email.trim(),
+      reply_to: email.trim(),
+      category: categoryLabel,
+      platform: platformLabel,
+      message: message.trim(),
+      ticket_id: ticketId,
+      app_name: 'Lingo Beats',
+      to_name: 'GlazerDev Support',
+      to_email: 'glazer.dev@gmail.com',
+      date: new Date().toLocaleString('ru-RU'),
+    };
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        {
+          publicKey: EMAILJS_PUBLIC_KEY,
+        }
+      );
+
+      setSubmittedTicket({
+        id: ticketId,
+        name: name.trim(),
+        email: email.trim(),
+        categoryLabel,
+        platformLabel,
+        message: message.trim(),
+        deliverySuccess: true,
+      });
+    } catch (err: any) {
+      console.warn('EmailJS send note:', err);
+      const errorNote = typeof err === 'string' ? err : err?.text || err?.message || 'Сервис EmailJS требует настройки Service ID / Template ID';
+
+      setSubmittedTicket({
+        id: ticketId,
+        name: name.trim(),
+        email: email.trim(),
+        categoryLabel,
+        platformLabel,
+        message: message.trim(),
+        deliverySuccess: false,
+        errorNote,
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 400);
+    }
   };
 
   return (
@@ -107,17 +201,54 @@ export const SupportPage: React.FC = () => {
             <div className="rounded-3xl border border-white/10 bg-[#132733]/50 p-6 sm:p-8 backdrop-blur-sm">
               
               {submittedTicket ? (
-                <div className="text-center py-8 animate-in fade-in duration-300">
-                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-teal-400/20 text-teal-300">
-                    <CheckCircle2 className="h-8 w-8" />
-                  </div>
-                  <h3 className="mt-4 text-2xl font-bold text-white">Обращение отправлено</h3>
-                  <p className="mt-2 text-xs text-amber-400 font-mono font-semibold">
-                    Идентификатор тикета: {submittedTicket.id}
-                  </p>
-                  <p className="mt-4 text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-                    Спасибо! Разработчик GlazerDev ответит на ваш адрес <strong className="text-white">{submittedTicket.email}</strong> в течение 12–24 часов.
-                  </p>
+                <div className="text-center py-6 animate-in fade-in duration-300">
+                  {submittedTicket.deliverySuccess ? (
+                    <>
+                      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-teal-400/20 text-teal-300">
+                        <CheckCircle2 className="h-8 w-8" />
+                      </div>
+                      <h3 className="mt-4 text-2xl font-bold text-white">Обращение отправлено</h3>
+                      <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-teal-400/10 border border-teal-400/20 px-3 py-1 text-xs text-teal-300 font-medium">
+                        <ShieldCheck className="h-3.5 w-3.5" />
+                        <span>Доставлено разработчику через EmailJS</span>
+                      </div>
+                      <p className="mt-3 text-xs text-amber-400 font-mono font-semibold">
+                        Номер тикета: {submittedTicket.id}
+                      </p>
+                      <p className="mt-4 text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+                        Спасибо, <strong className="text-white">{submittedTicket.name}</strong>! Ваше письмо отправлено на почту разработчика <strong className="text-white">glazer.dev@gmail.com</strong>. Ответ поступит на ваш адрес <strong className="text-white">{submittedTicket.email}</strong> в течение 12–24 часов.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-amber-400/20 text-amber-300">
+                        <AlertCircle className="h-8 w-8" />
+                      </div>
+                      <h3 className="mt-4 text-2xl font-bold text-white">Обращение сформировано</h3>
+                      <p className="mt-2 text-xs text-amber-400 font-mono font-semibold">
+                        Номер тикета: {submittedTicket.id}
+                      </p>
+                      <p className="mt-4 text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+                        Текст обращения готов к отправке разработчику GlazerDev. Вы можете отправить его в один клик через ваш почтовый клиент:
+                      </p>
+
+                      <div className="mt-5">
+                        <a
+                          href={`mailto:glazer.dev@gmail.com?subject=${encodeURIComponent(`[Lingo Beats Ticket ${submittedTicket.id}] ${submittedTicket.categoryLabel}`)}&body=${encodeURIComponent(`Имя: ${submittedTicket.name}\nEmail: ${submittedTicket.email}\nКатегория: ${submittedTicket.categoryLabel}\nПлатформа: ${submittedTicket.platformLabel}\nТикет: ${submittedTicket.id}\n\nСообщение:\n${submittedTicket.message}`)}`}
+                          className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-400 px-5 py-3 text-xs font-bold uppercase tracking-wider text-slate-950 shadow-md hover:bg-amber-300 transition-all"
+                        >
+                          <Mail className="h-4 w-4" />
+                          <span>Открыть почту и отправить на glazer.dev@gmail.com</span>
+                        </a>
+                      </div>
+
+                      {submittedTicket.errorNote && (
+                        <p className="mt-3 text-[11px] text-slate-400">
+                          Примечание EmailJS: {submittedTicket.errorNote}
+                        </p>
+                      )}
+                    </>
+                  )}
 
                   <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
                     <button
@@ -125,21 +256,27 @@ export const SupportPage: React.FC = () => {
                         setSubmittedTicket(null);
                         setMessage('');
                       }}
-                      className="rounded-xl border border-white/20 bg-white/5 px-5 py-2.5 text-xs font-semibold text-white hover:bg-white/10 transition-colors"
+                      className="rounded-xl border border-white/20 bg-white/5 px-5 py-2.5 text-xs font-semibold text-white hover:bg-white/10 transition-colors cursor-pointer"
                     >
                       Отправить ещё одно сообщение
                     </button>
-                    <a
-                      href="/"
-                      className="rounded-xl bg-amber-400 px-5 py-2.5 text-xs font-semibold text-slate-950 hover:bg-amber-300 transition-colors"
+                    <button
+                      type="button"
+                      onClick={() => navigateTo('home')}
+                      className="rounded-xl bg-white/10 px-5 py-2.5 text-xs font-semibold text-slate-200 hover:bg-white/20 transition-colors cursor-pointer"
                     >
                       На главную страницу
-                    </a>
+                    </button>
                   </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  <h2 className="text-lg font-bold text-white mb-2">Форма связи с разработчиком</h2>
+                  <div className="flex items-center justify-between mb-2">
+                    <h2 className="text-lg font-bold text-white">Форма связи с разработчиком</h2>
+                    <span className="inline-flex items-center gap-1 rounded-full bg-teal-400/10 px-2.5 py-0.5 text-[10px] font-semibold text-teal-300 border border-teal-400/20">
+                      emailjs.com
+                    </span>
+                  </div>
 
                   {errorMsg && (
                     <div className="rounded-xl border border-rose-500/30 bg-rose-950/40 p-3 text-xs text-rose-300">
@@ -236,6 +373,11 @@ export const SupportPage: React.FC = () => {
                       </>
                     )}
                   </button>
+
+                  <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 pt-1">
+                    <ShieldCheck className="h-3.5 w-3.5 text-teal-400 shrink-0" />
+                    <span>Отправка через API emailjs.com</span>
+                  </div>
                 </form>
               )}
 
