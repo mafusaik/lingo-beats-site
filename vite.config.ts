@@ -28,6 +28,7 @@ const rootDir = import.meta.dirname ?? process.cwd();
 
 export default defineConfig(() => {
   return {
+    base: './',
     plugins: [react(), tailwindcss(), cleanUrlRoutingPlugin()],
     resolve: {
       alias: {
