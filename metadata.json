@@ -1,0 +1,6 @@
+{
+  "name": "Lingo Beats — Английский через билингвальные аудиотреки",
+  "description": "Официальный сайт мобильного приложения Lingo Beats от GlazerDev. Изучайте английский с помощью синхронных билингвальных аудиотреков, естественного контекста и караоке-субтитров.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
