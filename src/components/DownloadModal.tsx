@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, CheckCircle } from 'lucide-react';
 import { AppleLogo, GooglePlayLogo } from './StoreIcons';
+import { AppLogo } from './AppLogo';
 
 interface DownloadModalProps {
   isOpen: boolean;
@@ -23,12 +24,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
         </button>
 
         <div className="flex items-center gap-3">
-          <img
-            src="/logo_dark_512.png"
-            alt="Lingo Beats"
-            className="h-12 w-12 rounded-xl object-contain shadow-md"
-            referrerPolicy="no-referrer"
-          />
+          <AppLogo className="h-12 w-12" size={48} />
           <div>
             <h3 className="text-xl font-bold text-white">Lingo Beats</h3>
             <p className="text-xs text-amber-400 font-medium">Разработчик: GlazerDev</p>

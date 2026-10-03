@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import playerScreenshot from '../assets/Screenshot_20261003_100228.png';
+import tracksScreenshot from '../assets/Screenshot_20261003_100242.png';
 
 interface PhoneMockupProps {
   type?: 'player' | 'tracks';
@@ -6,7 +8,7 @@ interface PhoneMockupProps {
 
 export const PhoneMockup: React.FC<PhoneMockupProps> = ({ type = 'player' }) => {
   const [imgError, setImgError] = useState(false);
-  const src = type === 'player' ? '/Screenshot_20261003_100228.png' : '/Screenshot_20261003_100242.png';
+  const src = type === 'player' ? playerScreenshot : tracksScreenshot;
 
   return (
     <div className="relative mx-auto w-full max-w-[320px] sm:max-w-[340px]">

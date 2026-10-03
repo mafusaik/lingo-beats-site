@@ -1,18 +1,16 @@
 import React from 'react';
 import { CheckCircle } from 'lucide-react';
 import { AppleLogo, GooglePlayLogo } from './StoreIcons';
+import { AppLogo } from './AppLogo';
 
 export const DownloadSection: React.FC = () => {
   return (
     <section id="download" className="py-20 border-t border-white/10 relative overflow-hidden bg-gradient-to-b from-[#0b171f] to-[#122834]">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center relative z-10">
         
-        <img
-          src="/logo_dark_512.png"
-          alt="Lingo Beats"
-          className="mx-auto h-16 w-16 rounded-2xl shadow-xl border border-white/15"
-          referrerPolicy="no-referrer"
-        />
+        <div className="flex justify-center">
+          <AppLogo className="h-16 w-16" size={64} />
+        </div>
         
         <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
           Lingo Beats в магазинах приложений

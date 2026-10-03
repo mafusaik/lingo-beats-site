@@ -1,8 +1,9 @@
 import React from 'react';
 import { Check, RefreshCw } from 'lucide-react';
-import { getRoute } from '../utils/routes';
+import { useNavigation } from '../context/NavigationContext';
 
 export const SubscriptionSection: React.FC = () => {
+  const { navigateTo } = useNavigation();
   return (
     <section id="subscription" className="py-20 border-t border-white/10 bg-[#0c1a24]/60">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -176,15 +177,23 @@ export const SubscriptionSection: React.FC = () => {
           <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-slate-400">
             <span>
               Пользовательское соглашение и EULA:{' '}
-              <a href={getRoute('terms')} className="text-amber-400 hover:underline">
+              <button
+                type="button"
+                onClick={() => navigateTo('terms')}
+                className="text-amber-400 hover:underline cursor-pointer"
+              >
                 Условия использования (/terms)
-              </a>
+              </button>
             </span>
             <span>
               Защита данных:{' '}
-              <a href={getRoute('privacy')} className="text-amber-400 hover:underline">
+              <button
+                type="button"
+                onClick={() => navigateTo('privacy')}
+                className="text-amber-400 hover:underline cursor-pointer"
+              >
                 Политика конфиденциальности (/privacy)
-              </a>
+              </button>
             </span>
           </div>
         </div>

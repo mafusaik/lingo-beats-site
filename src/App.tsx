@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { PlayerConceptShowcase } from './components/PlayerConceptShowcase';
@@ -17,29 +17,21 @@ import { DownloadModal } from './components/DownloadModal';
 import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
 import { SupportPage } from './pages/SupportPage';
+import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { Smartphone, Sparkles, Headphones } from 'lucide-react';
 
-export default function App() {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+function MainAppContent() {
+  const { screen } = useNavigation();
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
 
-  useEffect(() => {
-    const handlePopState = () => {
-      setCurrentPath(window.location.pathname);
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-
-  // Support direct route matching whether at domain root or under /repo-name/
-  const normalizedPath = currentPath.toLowerCase();
-  if (normalizedPath.includes('/privacy')) {
+  // Dedicated separate screens requested by user
+  if (screen === 'privacy') {
     return <PrivacyPage />;
   }
-  if (normalizedPath.includes('/terms')) {
+  if (screen === 'terms') {
     return <TermsPage />;
   }
-  if (normalizedPath.includes('/support')) {
+  if (screen === 'support') {
     return <SupportPage />;
   }
 
@@ -117,5 +109,13 @@ export default function App() {
         onClose={() => setIsDownloadModalOpen(false)}
       />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <NavigationProvider>
+      <MainAppContent />
+    </NavigationProvider>
   );
 }

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Mail, Send, CheckCircle2, MessageSquare, Copy, Check, HelpCircle, Smartphone, ExternalLink } from 'lucide-react';
 import { Footer } from '../components/Footer';
-import { getRoute } from '../utils/routes';
+import { AppLogo } from '../components/AppLogo';
+import { useNavigation } from '../context/NavigationContext';
 
 export const SupportPage: React.FC = () => {
+  const { navigateTo } = useNavigation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [category, setCategory] = useState('subscription');
@@ -54,28 +56,25 @@ export const SupportPage: React.FC = () => {
       <header className="border-b border-white/10 bg-[#0b171f]/90 backdrop-blur-md sticky top-0 z-40">
         <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
-            <a href={getRoute('/')} className="flex items-center gap-3 group">
-              <img
-                src="/logo_dark_512.png"
-                alt="Lingo Beats"
-                className="h-9 w-9 rounded-lg object-contain transition-transform group-hover:scale-105"
-                referrerPolicy="no-referrer"
-              />
-              <span className="font-['Plus_Jakarta_Sans',sans-serif] text-xl font-bold tracking-tight text-white">
-                Lingo Beats
-              </span>
-            </a>
+            <button
+              type="button"
+              onClick={() => navigateTo('home')}
+              className="flex items-center gap-3 group text-left focus:outline-none cursor-pointer"
+            >
+              <AppLogo showWordmark className="h-9 w-9 transition-transform group-hover:scale-105" />
+            </button>
             <span className="hidden sm:inline-block text-xs text-slate-500">/ Служба поддержки</span>
           </div>
 
           <div className="flex items-center gap-4">
-            <a
-              href={getRoute('/')}
-              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-amber-400 transition-colors"
+            <button
+              type="button"
+              onClick={() => navigateTo('home')}
+              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-amber-400 transition-colors cursor-pointer"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>На главную</span>
-            </a>
+            </button>
           </div>
         </div>
       </header>

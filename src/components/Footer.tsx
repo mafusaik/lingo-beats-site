@@ -1,52 +1,55 @@
 import React from 'react';
-import { getRoute } from '../utils/routes';
+import { AppLogo } from './AppLogo';
+import { useNavigation } from '../context/NavigationContext';
 
 export const Footer: React.FC = () => {
+  const { navigateTo } = useNavigation();
+
   return (
     <footer className="border-t border-white/10 bg-[#081219] py-12 text-slate-400">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           
           {/* Brand & Wordmark */}
-          <div className="flex items-center gap-3">
-            <img
-              src="/logo_dark_512.png"
-              alt="Lingo Beats"
-              className="h-8 w-8 rounded-lg object-contain shadow-sm"
-              referrerPolicy="no-referrer"
-            />
-            <span className="font-['Plus_Jakarta_Sans',sans-serif] text-lg font-bold tracking-tight text-white">
-              Lingo Beats
-            </span>
+          <button
+            type="button"
+            onClick={() => navigateTo('home')}
+            className="flex items-center gap-3 text-left focus:outline-none cursor-pointer"
+          >
+            <AppLogo showWordmark className="h-8 w-8" wordmarkClassName="text-lg font-bold tracking-tight text-white" />
             <span className="text-xs text-slate-500 font-normal">by GlazerDev</span>
-          </div>
+          </button>
 
           {/* Links to Separate Pages */}
           <nav className="flex flex-wrap items-center justify-center gap-6 text-xs font-medium">
-            <a
-              href={getRoute('/')}
-              className="text-slate-300 transition-colors hover:text-white"
+            <button
+              type="button"
+              onClick={() => navigateTo('home')}
+              className="text-slate-300 transition-colors hover:text-white cursor-pointer"
             >
               Главная
-            </a>
-            <a
-              href={getRoute('privacy')}
-              className="text-slate-300 transition-colors hover:text-white"
+            </button>
+            <button
+              type="button"
+              onClick={() => navigateTo('privacy')}
+              className="text-slate-300 transition-colors hover:text-white cursor-pointer"
             >
               Политика конфиденциальности
-            </a>
-            <a
-              href={getRoute('terms')}
-              className="text-slate-300 transition-colors hover:text-white"
+            </button>
+            <button
+              type="button"
+              onClick={() => navigateTo('terms')}
+              className="text-slate-300 transition-colors hover:text-white cursor-pointer"
             >
               Условия использования (EULA)
-            </a>
-            <a
-              href={getRoute('support')}
-              className="text-slate-300 transition-colors hover:text-white"
+            </button>
+            <button
+              type="button"
+              onClick={() => navigateTo('support')}
+              className="text-slate-300 transition-colors hover:text-white cursor-pointer"
             >
               Служба поддержки
-            </a>
+            </button>
           </nav>
 
           {/* Developer and Contact Info */}

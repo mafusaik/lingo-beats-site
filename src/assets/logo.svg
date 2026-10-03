@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700&amp;display=swap');
+      .brand-text {
+        font-family: 'Plus Jakarta Sans', 'Liberation Sans', 'FreeSans', -apple-system, sans-serif;
+        font-weight: 700;
+        fill: #FFFFFF;
+        letter-spacing: -1.5px;
+      }
+    </style>
+  </defs>
+  <!-- Background matching the exact dark blue #1e2c48 of logo_dark_512.png -->
+  <rect width="512" height="512" fill="#1e2c48" />
+
+  <!-- Lingo Beats typography -->
+  <text x="76" y="246" class="brand-text" font-size="104">Lingo</text>
+  <text x="76" y="348" class="brand-text" font-size="104">Beats</text>
+
+  <!-- 4 vertical rounded soundwave bars in amber gold #f5a623 -->
+  <g fill="#f5a623">
+    <!-- Bar 1: tallest -->
+    <rect x="386" y="260" width="17" height="92" rx="8.5" />
+    <!-- Bar 2: medium-low -->
+    <rect x="414" y="280" width="17" height="52" rx="8.5" />
+    <!-- Bar 3: medium-high -->
+    <rect x="442" y="274" width="17" height="64" rx="8.5" />
+    <!-- Bar 4: shortest -->
+    <rect x="470" y="290" width="17" height="32" rx="8.5" />
+  </g>
+</svg>
