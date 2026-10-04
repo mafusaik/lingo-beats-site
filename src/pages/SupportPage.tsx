@@ -6,8 +6,8 @@ import { AppLogo } from '../components/AppLogo';
 import { useNavigation } from '../context/NavigationContext';
 
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'GMNx52F0-ZQLDX-2Z';
-const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_lingobeats';
-const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_lingobeats';
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_eaz5rbk';
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_xpzipm1';
 
 interface SubmittedTicket {
   id: string;
