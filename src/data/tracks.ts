@@ -87,11 +87,11 @@ export const TRACKS_DATA: Track[] = [
   {
     id: 'little-by-little',
     title: 'Little by Little',
-    level: 'A2',
+    level: 'A1',
     duration: '1:57',
     durationSec: 117,
-    genre: 'Folk Acoustic',
-    descriptionRu: 'Вдохновляющая композиция о регулярных маленьких шагах в обучении и жизни.',
+    genre: 'Folk Acoustic / Basics',
+    descriptionRu: 'Начальный уровень (A1): вдохновляющая композиция о регулярных маленьких шагах в обучении и жизни.',
     lyrics: [
       { time: 0, ru: 'Каждый большой путь начинается с шага', en: 'Every great journey starts with a single step' },
       { time: 6, ru: 'Шаг за шагом, мало-помалу', en: 'Step by step, little by little' },

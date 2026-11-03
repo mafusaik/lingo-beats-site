@@ -32,29 +32,44 @@ export const Hero: React.FC = () => {
               Слушайте живые диалоги и музыкальные истории с синхронным построчным переводом. Без утомительной зубрежки грамматики — только естественное погружение в контекст и интонацию.
             </p>
 
-            {/* Store Download Badges / Placeholders with Apple and Google Play logos */}
-            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            {/* Store Download Buttons with official App Store and Google Play links */}
+            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <a
-                href="#download"
-                className="inline-flex items-center justify-center gap-3 rounded-2xl bg-amber-400 px-6 py-4 text-sm font-bold uppercase tracking-wider text-slate-950 shadow-lg shadow-amber-400/20 transition-all duration-200 hover:bg-amber-300 active:scale-95"
+                href="https://apps.apple.com/app/lingo-beats/id6820147844"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2.5 rounded-2xl bg-amber-400 px-5 py-3 text-slate-950 font-bold shadow-lg shadow-amber-400/20 transition-all duration-200 hover:bg-amber-300 active:scale-95 group"
               >
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <AppleLogo className="h-4 w-4 text-slate-950" />
-                  <GooglePlayLogo className="h-4 w-4" />
+                <AppleLogo className="h-5 w-5 text-slate-950 shrink-0" />
+                <div className="text-left leading-tight">
+                  <div className="text-[10px] uppercase font-semibold opacity-75">Загрузите в</div>
+                  <div className="text-sm font-extrabold tracking-tight">App Store</div>
                 </div>
-                <span>Загрузить в App Store &amp; Google Play</span>
+              </a>
+
+              <a
+                href="https://play.google.com/store/apps/details?id=com.glazer.learn.english.music.lingobeats"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2.5 rounded-2xl border border-white/20 bg-white/10 px-5 py-3 text-white font-bold shadow-md transition-all duration-200 hover:bg-white/20 hover:border-white/30 active:scale-95 group"
+              >
+                <GooglePlayLogo className="h-5 w-5 shrink-0" />
+                <div className="text-left leading-tight">
+                  <div className="text-[10px] uppercase font-semibold text-slate-300">Доступно в</div>
+                  <div className="text-sm font-extrabold tracking-tight">Google Play</div>
+                </div>
               </a>
 
               <a
                 href="#player-features"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/20 bg-white/5 px-6 py-4 text-sm font-medium text-white transition-all duration-200 hover:bg-white/10"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-300 transition-all duration-200 hover:bg-white/10 hover:text-white"
               >
-                <ArrowDown className="h-4 w-4" />
-                <span>Возможности приложения</span>
+                <ArrowDown className="h-3.5 w-3.5" />
+                <span>О приложении</span>
               </a>
             </div>
 
-            {/* Core facts row: updated levels A2–C1 */}
+            {/* Core facts row: updated levels A1–C1 */}
             <div className="mt-10 grid grid-cols-3 gap-6 border-t border-white/10 pt-8 max-w-lg">
               <div>
                 <p className="text-2xl font-bold tracking-tight text-white font-mono tabular-nums">100%</p>
@@ -65,8 +80,8 @@ export const Hero: React.FC = () => {
                 <p className="mt-1 text-xs text-slate-400">Плавная регулировка скорости речи</p>
               </div>
               <div>
-                <p className="text-2xl font-bold tracking-tight text-white font-mono tabular-nums">A2–C1</p>
-                <p className="mt-1 text-xs text-slate-400">Уровни от базового (A2) до свободного (C1)</p>
+                <p className="text-2xl font-bold tracking-tight text-white font-mono tabular-nums">A1–C1</p>
+                <p className="mt-1 text-xs text-slate-400">Уровни от начального (A1) до свободного (C1)</p>
               </div>
             </div>
           </div>

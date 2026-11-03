@@ -75,7 +75,7 @@ export const Navbar: React.FC = () => {
             className="inline-flex items-center gap-2 rounded-xl bg-amber-400 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-slate-950 shadow-sm transition-all duration-200 hover:bg-amber-300 active:scale-95"
           >
             <Download className="h-4 w-4" />
-            <span>Магазины приложений</span>
+            <span>Скачать приложение</span>
           </a>
         </div>
 

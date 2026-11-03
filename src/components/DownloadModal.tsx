@@ -32,32 +32,42 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
         </div>
 
         <p className="mt-4 text-sm text-slate-300">
-          Приложение находится на этапе финальной подготовки к публикации в магазинах мобильных приложений.
+          Приложение официально доступно для бесплатной загрузки на платформах iOS и Android:
         </p>
 
-        {/* Store Links with official icons */}
+        {/* Store Links with official icons and direct URLs */}
         <div className="mt-6 space-y-3">
-          <div className="flex items-center justify-between rounded-xl border border-white/15 bg-white/5 p-3.5 text-white">
+          <a
+            href="https://apps.apple.com/app/lingo-beats/id6820147844"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-between rounded-xl border border-white/20 bg-white/10 p-3.5 text-white transition-all hover:bg-amber-400 hover:text-slate-950 hover:border-amber-400 group"
+          >
             <div className="flex items-center gap-3">
-              <AppleLogo className="h-6 w-6 text-white shrink-0" />
+              <AppleLogo className="h-6 w-6 text-white group-hover:text-slate-950 shrink-0 transition-colors" />
               <div>
-                <p className="text-[11px] uppercase font-semibold text-slate-400 leading-tight">Скоро в</p>
+                <p className="text-[11px] uppercase font-semibold text-slate-400 group-hover:text-slate-800 leading-tight">Загрузите в</p>
                 <p className="text-base font-bold leading-tight">App Store</p>
               </div>
             </div>
-            <span className="text-xs font-semibold text-amber-300">iOS</span>
-          </div>
+            <span className="text-xs font-bold text-amber-300 group-hover:text-slate-950">Скачать →</span>
+          </a>
 
-          <div className="flex items-center justify-between rounded-xl border border-white/15 bg-white/5 p-3.5 text-white">
+          <a
+            href="https://play.google.com/store/apps/details?id=com.glazer.learn.english.music.lingobeats"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-between rounded-xl border border-white/20 bg-white/10 p-3.5 text-white transition-all hover:bg-teal-400 hover:text-slate-950 hover:border-teal-400 group"
+          >
             <div className="flex items-center gap-3">
               <GooglePlayLogo className="h-6 w-6 shrink-0" />
               <div>
-                <p className="text-[11px] uppercase font-semibold text-slate-400 leading-tight">Скоро в</p>
+                <p className="text-[11px] uppercase font-semibold text-slate-400 group-hover:text-slate-800 leading-tight">Доступно в</p>
                 <p className="text-base font-bold leading-tight">Google Play</p>
               </div>
             </div>
-            <span className="text-xs font-semibold text-amber-300">Android</span>
-          </div>
+            <span className="text-xs font-bold text-teal-300 group-hover:text-slate-950">Скачать →</span>
+          </a>
         </div>
 
         {/* Features check list */}

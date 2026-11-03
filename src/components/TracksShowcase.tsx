@@ -5,8 +5,14 @@ import { PhoneMockup } from './PhoneMockup';
 export const TracksShowcase: React.FC = () => {
   const levels = [
     {
+      level: 'A1',
+      title: 'Начальный уровень',
+      focus: 'Базовая повседневная лексика, первые фразы вежливости, числа, цвета и привыкание к естественному звучанию языка.',
+      topics: 'Приветствия · Семья · Еда и напитки · Первые фразы и числа',
+    },
+    {
       level: 'A2',
-      title: 'Базовый уровень',
+      title: 'Элементарный уровень',
       focus: 'Бытовой контекст, распорядок дня, простые диалоги в магазинах и кафе. Помогает преодолеть языковой зажим.',
       topics: 'Знакомство · Покупки · Городская навигация · Утренние привычки',
     },
@@ -42,7 +48,7 @@ export const TracksShowcase: React.FC = () => {
               <Layers className="h-4 w-4" />
               <span>Структура библиотеки</span>
               <span aria-hidden="true" className="text-slate-600">·</span>
-              <span>Уровни A2–C1</span>
+              <span>Уровни A1–C1</span>
             </div>
 
             <h2 className="mt-3 font-['Plus_Jakarta_Sans',sans-serif] text-3xl font-bold tracking-tight text-white sm:text-4xl">
@@ -50,7 +56,7 @@ export const TracksShowcase: React.FC = () => {
             </h2>
 
             <p className="mt-4 text-base text-slate-300 leading-relaxed">
-              Контент Lingo Beats структурирован по международной шкале CEFR от базового уровня A2 до продвинутого C1. Вы можете плавно повышать сложность по мере привыкания к беглой английской речи.
+              Контент Lingo Beats структурирован по международной шкале CEFR от начального уровня A1 до продвинутого C1. Вы можете плавно повышать сложность по мере привыкания к беглой английской речи.
             </p>
 
             {/* Regular Updates & Free Tier Highlights Banner */}

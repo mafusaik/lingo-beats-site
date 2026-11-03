@@ -111,7 +111,7 @@ export const SubscriptionSection: React.FC = () => {
                 <li className="flex items-start gap-2.5">
                   <Check className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
                   <span>
-                    <strong className="text-white">Полный доступ ко всей библиотеке</strong> треков уровней A2, B1, B2, C1
+                    <strong className="text-white">Полный доступ ко всей библиотеке</strong> треков уровней A1, A2, B1, B2, C1
                   </span>
                 </li>
                 <li className="flex items-start gap-2.5">

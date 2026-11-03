@@ -50,6 +50,22 @@ export const Footer: React.FC = () => {
             >
               Служба поддержки
             </button>
+            <a
+              href="https://apps.apple.com/app/lingo-beats/id6820147844"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-amber-400/90 transition-colors hover:text-amber-300 font-semibold"
+            >
+              App Store ↗
+            </a>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.glazer.learn.english.music.lingobeats"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-teal-400/90 transition-colors hover:text-teal-300 font-semibold"
+            >
+              Google Play ↗
+            </a>
           </nav>
 
           {/* Developer and Contact Info */}

@@ -7,7 +7,7 @@ export interface LyricLine {
 export interface Track {
   id: string;
   title: string;
-  level: 'A2' | 'B1' | 'B2' | 'C1';
+  level: 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
   duration: string; // e.g. "4:04"
   durationSec: number;
   genre: string;

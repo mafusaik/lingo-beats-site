@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { Volume2, VolumeX, Play } from 'lucide-react';
 import playerScreenshot from '../assets/Screenshot_20261003_100228.png';
 import tracksScreenshot from '../assets/Screenshot_20261003_100242.png';
+import playerVideo from '../assets/player_demo.mp4';
 
 interface PhoneMockupProps {
   type?: 'player' | 'tracks';
@@ -8,7 +10,40 @@ interface PhoneMockupProps {
 
 export const PhoneMockup: React.FC<PhoneMockupProps> = ({ type = 'player' }) => {
   const [imgError, setImgError] = useState(false);
-  const src = type === 'player' ? playerScreenshot : tracksScreenshot;
+  const [videoError, setVideoError] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const toggleSound = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (!videoRef.current) return;
+    const nextMuted = !isMuted;
+    videoRef.current.muted = nextMuted;
+    setIsMuted(nextMuted);
+    if (!nextMuted && videoRef.current.paused) {
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+  };
+
+  const togglePlay = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (!videoRef.current) return;
+    if (videoRef.current.paused) {
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
 
   return (
     <div className="relative mx-auto w-full max-w-[320px] sm:max-w-[340px]">
@@ -18,19 +53,65 @@ export const PhoneMockup: React.FC<PhoneMockupProps> = ({ type = 'player' }) => 
       {/* Outer Phone Bezel */}
       <div className="relative rounded-[44px] border-4 border-slate-700 bg-slate-950 p-2 shadow-2xl ring-1 ring-white/15">
         
-        {/* Sleek speaker pill notch - raised and reduced to prevent overlapping text */}
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 h-3.5 w-24 rounded-full bg-slate-900 z-20 flex items-center justify-center pointer-events-none">
-          <div className="h-1.5 w-1.5 rounded-full bg-slate-800 mr-2" />
-          <div className="h-1 w-8 rounded-full bg-slate-800" />
-        </div>
+        {/* Ultra-thin ear speaker slit discreetly integrated into top bezel (outside screen area) */}
+        <div className="absolute top-1.5 left-1/2 -translate-x-1/2 h-1 w-12 rounded-full bg-slate-800/80 pointer-events-none" />
 
-        {/* Screen Display Container with top padding so notch never obscures title */}
-        <div className="relative overflow-hidden rounded-[36px] bg-[#142b36] pt-6 aspect-[9/19] select-none text-slate-100 flex flex-col justify-between">
+        {/* Screen Display Container */}
+        <div className="relative overflow-hidden rounded-[36px] bg-[#142b36] aspect-[9/19] select-none text-slate-100 flex flex-col justify-between">
           
-          {!imgError ? (
-            <div className="h-full w-full overflow-hidden flex flex-col">
+          {type === 'player' && !videoError ? (
+            /* Live Interactive Synchronized Karaoke Video with Sound Toggle */
+            <div className="relative h-full w-full overflow-hidden group cursor-pointer" onClick={togglePlay}>
+              <video
+                ref={videoRef}
+                className="h-[102%] w-full object-cover object-top -mt-1"
+                autoPlay
+                loop
+                muted={isMuted}
+                playsInline
+                poster={playerScreenshot}
+                onError={() => setVideoError(true)}
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+              >
+                <source src={playerVideo} type="video/mp4" />
+                <source src="./assets/aistudio/2026-11-03_21.28.31_9896f264.mp4" type="video/mp4" />
+                Ваш браузер не поддерживает видео.
+              </video>
+
+              {/* In-screen Floating Sound Toggle Button (top-right) */}
+              <button
+                type="button"
+                onClick={toggleSound}
+                className="absolute top-4 right-4 z-20 flex items-center gap-1.5 rounded-full border border-white/25 bg-slate-950/80 px-2.5 py-1.5 text-[11px] font-semibold text-white shadow-lg backdrop-blur-md transition-all hover:bg-slate-900 hover:border-amber-400 active:scale-95 cursor-pointer"
+                title={isMuted ? 'Включить звук' : 'Выключить звук'}
+              >
+                {isMuted ? (
+                  <>
+                    <VolumeX className="h-3.5 w-3.5 text-amber-400" />
+                    <span className="hidden xs:inline">Вкл звук</span>
+                  </>
+                ) : (
+                  <>
+                    <Volume2 className="h-3.5 w-3.5 text-teal-400 animate-pulse" />
+                    <span className="text-teal-300">Звук</span>
+                  </>
+                )}
+              </button>
+
+              {/* Pause overlay icon on hover or when paused */}
+              {!isPlaying && (
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10 pointer-events-none">
+                  <div className="rounded-full bg-slate-900/90 border border-white/20 p-4 text-amber-400 shadow-2xl">
+                    <Play className="h-7 w-7 fill-amber-400 translate-x-0.5" />
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : !imgError ? (
+            <div className="h-full w-full overflow-hidden flex flex-col pt-6">
               <img
-                src={src}
+                src={type === 'player' ? playerScreenshot : tracksScreenshot}
                 alt={type === 'player' ? 'Экран аудиоплеера Lingo Beats' : 'Экран каталога треков Lingo Beats'}
                 className="h-full w-full object-cover object-top"
                 loading="eager"
@@ -115,7 +196,8 @@ export const PhoneMockup: React.FC<PhoneMockupProps> = ({ type = 'player' }) => 
 
               <div className="space-y-2 mt-4 flex-1">
                 {[
-                  { level: 'Уровень A2', desc: 'Базовая повседневная лексика и диалоги' },
+                  { level: 'Уровень A1', desc: 'Первые фразы, приветствия и базовая лексика' },
+                  { level: 'Уровень A2', desc: 'Повседневная жизнь, диалоги и привычки' },
                   { level: 'Уровень B1', desc: 'Практические ситуации, путешествия и работа' },
                   { level: 'Уровень B2', desc: 'Сложные темы, эмоциональные истории и ритм' },
                   { level: 'Уровень C1', desc: 'Абстрактные темы, идиомы и свободная речь' },
@@ -139,6 +221,28 @@ export const PhoneMockup: React.FC<PhoneMockupProps> = ({ type = 'player' }) => 
 
         </div>
       </div>
+
+      {type === 'player' && !videoError && (
+        <div className="mt-3.5 flex items-center justify-center">
+          <button
+            type="button"
+            onClick={toggleSound}
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-slate-900/90 px-4 py-2 text-xs font-semibold text-white shadow-lg backdrop-blur-md transition-all hover:bg-slate-800 hover:border-amber-400 active:scale-95 cursor-pointer"
+          >
+            {isMuted ? (
+              <>
+                <VolumeX className="h-4 w-4 text-amber-400" />
+                <span>Включить звук видео</span>
+              </>
+            ) : (
+              <>
+                <Volume2 className="h-4 w-4 text-teal-400 animate-pulse" />
+                <span>Звук включен · Нажмите, чтобы выключить</span>
+              </>
+            )}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
